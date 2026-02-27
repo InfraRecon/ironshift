@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/ironshift/static/css/main.53b79153.css",
+    "main.js": "/ironshift/static/js/main.1c95f89d.js",
+    "static/media/ProjectPhantom.png": "/ironshift/static/media/ProjectPhantom.70e1fcc5fbbca132f904.png",
+    "static/media/ProjectBreakerScreen1.png": "/ironshift/static/media/ProjectBreakerScreen1.c64164aa70c96f44c65a.png",
+    "static/media/BrowserTreasure.png": "/ironshift/static/media/BrowserTreasure.3c4d68eca5ab288bd900.png",
+    "static/media/ProjectFallaceAlien.png": "/ironshift/static/media/ProjectFallaceAlien.9636590f25fedf90a382.png",
+    "static/media/AstroAssault.png": "/ironshift/static/media/AstroAssault.d64986e82e397404518f.png",
+    "static/media/IronpulseText.png": "/ironshift/static/media/IronpulseText.edfdb91649c4b4aee428.png",
+    "static/media/ProjectPhantomPath.png": "/ironshift/static/media/ProjectPhantomPath.704ed89b1faa5dab021e.png",
+    "index.html": "/ironshift/index.html",
+    "main.53b79153.css.map": "/ironshift/static/css/main.53b79153.css.map",
+    "main.1c95f89d.js.map": "/ironshift/static/js/main.1c95f89d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.53b79153.css",
+    "static/js/main.1c95f89d.js"
+  ]
+}
