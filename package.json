@@ -2,7 +2,7 @@
   "name": "ironshift",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://github.com/InfraRecon/ironshift",
+ "homepage": "https://InfraRecon.github.io/ironshift",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
