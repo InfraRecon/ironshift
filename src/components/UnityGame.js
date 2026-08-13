@@ -1,6 +1,7 @@
+// ./src/components/UnityGame.js
 import React, { useEffect, useRef, useState } from "react";
 
-const UnityLoader = () => {
+export default function UnityGame() {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const [unityInstance, setUnityInstance] = useState(null);
@@ -10,58 +11,59 @@ const UnityLoader = () => {
 
     const canvas = canvasRef.current;
 
-    // Remove any Safari-specific patches (we don't need them)
-    if (typeof HTMLCanvasElement !== "undefined") {
-      HTMLCanvasElement.prototype.getContextSafariWebGL2Fixed = undefined;
-    }
-
-    const buildUrl = "/InfraRecon/ironshift/assets/Build";
+    // Paths to your Unity build files in public/
+    const buildUrl = process.env.PUBLIC_URL + "/assets/Build";
     const loaderUrl = `${buildUrl}/assets.loader.js`;
     const dataUrl = `${buildUrl}/assets.data`;
     const frameworkUrl = `${buildUrl}/assets.framework.js`;
     const wasmUrl = `${buildUrl}/assets.wasm`;
 
-    const script = document.createElement("script");
-    script.src = loaderUrl;
-    script.onload = () => {
+    let scriptTag = document.createElement("script");
+    scriptTag.src = loaderUrl;
+    scriptTag.onload = () => {
       if (window.createUnityInstance) {
-        window.createUnityInstance(canvas, {
-          dataUrl,
-          frameworkUrl,
-          codeUrl: wasmUrl,
-          streamingAssetsUrl: "StreamingAssets",
-          companyName: "YourCompany",
-          productName: "InfraRecon",
-          productVersion: "1.0",
-          devicePixelRatio: window.devicePixelRatio,
-        })
-        .then((instance) => setUnityInstance(instance))
-        .catch((err) => console.error("Unity load error:", err));
+        window
+          .createUnityInstance(canvas, {
+            dataUrl,
+            frameworkUrl,
+            codeUrl: wasmUrl,
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "Iron Shift",
+            productName: "InfraRecon",
+            productVersion: "1.0",
+            devicePixelRatio: window.devicePixelRatio,
+          })
+          .then((instance) => setUnityInstance(instance))
+          .catch((err) => console.error("Unity load error:", err));
+      } else {
+        console.error("Unity loader not found after script load");
       }
     };
-    document.body.appendChild(script);
+    scriptTag.onerror = () => {
+      console.error("Failed to load Unity loader script");
+    };
+    document.body.appendChild(scriptTag);
 
     return () => {
+      // Clean up Unity instance on unmount
       if (unityInstance) {
         unityInstance.Quit().catch(() => {});
       }
-      document.body.removeChild(script);
+      document.body.removeChild(scriptTag);
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      id="unity-container" // ✅ Important: Unity may use this ID
-      style={{ width: "100%", height: "100vh", position: "relative" }}
+      id="unity-container"
+      style={{ width: "100%", height: "100%", minHeight: "400px", position: "relative" }}
     >
       <canvas
         ref={canvasRef}
-        id="unity-canvas" // ✅ Important: give the canvas an explicit ID
+        id="unity-canvas"
         style={{ width: "100%", height: "100%", background: "#000" }}
       />
     </div>
   );
-};
-
-export default UnityLoader;
+}
