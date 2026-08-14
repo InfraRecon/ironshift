@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ironshift/static/css/main.9849b324.css",
-    "main.js": "/ironshift/static/js/main.66123dec.js",
+    "main.css": "/ironshift/static/css/main.ee8c733a.css",
+    "main.js": "/ironshift/static/js/main.ab0d86fa.js",
     "static/media/ProjectBreakerScreen1.png": "/ironshift/static/media/ProjectBreakerScreen1.9653581ef624e4ccff72.png",
     "static/media/ProjectPhantom.png": "/ironshift/static/media/ProjectPhantom.70e1fcc5fbbca132f904.png",
     "static/media/BrowserTreasure.png": "/ironshift/static/media/BrowserTreasure.3c4d68eca5ab288bd900.png",
@@ -21,11 +21,11 @@
     "static/media/OurTeam.jpg": "/ironshift/static/media/OurTeam.702e2328fc1425af9323.jpg",
     "static/media/GameDevelopment.jpg": "/ironshift/static/media/GameDevelopment.72381c9bf5b43f6bc217.jpg",
     "index.html": "/ironshift/index.html",
-    "main.9849b324.css.map": "/ironshift/static/css/main.9849b324.css.map",
-    "main.66123dec.js.map": "/ironshift/static/js/main.66123dec.js.map"
+    "main.ee8c733a.css.map": "/ironshift/static/css/main.ee8c733a.css.map",
+    "main.ab0d86fa.js.map": "/ironshift/static/js/main.ab0d86fa.js.map"
   },
   "entrypoints": [
-    "static/css/main.9849b324.css",
-    "static/js/main.66123dec.js"
+    "static/css/main.ee8c733a.css",
+    "static/js/main.ab0d86fa.js"
   ]
 }
