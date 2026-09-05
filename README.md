@@ -2,7 +2,7 @@
 
 The official frontend repository for the **Iron Shift Studio** single-page web application. This platform serves as a production-grade digital storefront, interactive game development showcase, and live systems engineering matrix deployed directly via GitHub Pages.
 
-**🌐 Live Deployed Interface:** [https://github.io]([https://github.io](https://infrarecon.github.io/ironshift/))
+**🌐 Live Deployed Interface:** [https://infrarecon.github.io/ironshift/]
 
 ---
 
