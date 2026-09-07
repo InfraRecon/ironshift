@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import SupportersCarousel from './components/SupportersCarousel';
 import StaticImageSection from './components/StaticImageSection';
 
 import WorkWithUs from './WorkWithUs';
@@ -33,41 +32,106 @@ function AnimatedRoutes({ children }) {
   );
 }
 
-/* ================= STATIC IMAGE SECTION WITH OFFSET ================= */
+/* ================= AUTOMATIC SUPPORTERS CAROUSEL (FILM STRIP LOOP) ================= */
+function SupportersCarousel() {
+  const supporters = [
+    { name: "INFRARECON", badge: "https://yt3.ggpht.com/1xI0oPX_ZgzNJJFFgYpCMX8do3K3d_kGUdRE2peRRE6KuGaloH55lUG7bpdfD5gJB2KWBsnUPg=s176-c-k-c0x00ffffff-no-rj-mo?w=150&auto=format&fit=crop&q=80" },
+    { name: "N4G MAG", badge: "https://techsceneza.co.za/wp-content/uploads/2023/11/qM7QhW_r_400x400.jpg?w=150&auto=format&fit=crop&q=80" },
+    { name: "GEMINI", badge: "https://www.nyu.edu/life/information-technology/artificial-intelligence-at-nyu/generative-ai-services/gemini/_jcr_content/root/container/nyu_column_control/c2/nyu_image.coreimg.82.1000.jpeg/1771883243645/logo-gemini.jpeg?w=150&auto=format&fit=crop&q=80" },
+    { name: "UNITY", badge: "https://avatars.githubusercontent.com/u/426196?w=150&auto=format&fit=crop&q=80" },
+  ];
+
+  // Quadrupling ensures zero pop/stutter across ultra-wide monitors on loop reset (-25%)
+  const extendedSupporters = [...supporters, ...supporters, ...supporters, ...supporters];
+
+  return (
+    <div className="w-full overflow-hidden relative py-8">
+      {/* Film strip sprocket holes simulation top and bottom */}
+      <div className="absolute top-0 left-0 right-0 h-2 bg-[radial-gradient(#22d3ee_40%,transparent_40%)] bg-[length:16px_8px] opacity-40" />
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-[radial-gradient(#22d3ee_40%,transparent_40%)] bg-[length:16px_8px] opacity-40" />
+
+      {/* Gradient fade masks on left and right */}
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
+
+      <motion.div
+        className="flex gap-8 items-center whitespace-nowrap"
+        animate={{ x: ["0%", "-25%"] }}
+        transition={{
+          repeat: Infinity,
+          ease: "linear",
+          duration: 28,
+        }}
+      >
+        {extendedSupporters.map((sup, index) => (
+          <div
+            key={index}
+            className="flex items-center gap-4 px-6 py-3.5 bg-gray-950 border-2 border-cyan-500/40 shadow-[4px_4px_0px_0px_rgba(34,211,238,0.3)] hover:border-cyan-300 hover:shadow-[4px_4px_0px_0px_rgba(34,211,238,0.8)] transition-all shrink-0 group relative"
+          >
+            {/* Retro corner notches */}
+            <div className="absolute -top-1 -left-1 w-2 h-2 bg-cyan-400" />
+            <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-cyan-400" />
+
+            <img
+              src={sup.badge}
+              alt={sup.name}
+              className="w-10 h-10 object-cover border border-cyan-400/60 group-hover:scale-105 transition-transform"
+            />
+            <span className="text-xs font-black tracking-[0.25em] text-cyan-200 group-hover:text-white">
+              {sup.name}
+            </span>
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ================= RETRO STATIC IMAGE SECTION ================= */
 function ImageTextSection({ image, heading, text, reverse = false }) {
   return (
-    <section className="relative w-full overflow-hidden py-32 bg-gradient-to-b from-black via-gray-950 to-black">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center px-6 gap-12">
+    <section className="relative w-full overflow-hidden py-32 bg-gradient-to-b from-black via-gray-950 to-black border-t-2 border-cyan-500/20">
+      {/* Retro Dot Matrix Grid Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(#22d3ee_1px,transparent_1px)] bg-[size:24px_24px] opacity-10 pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center px-6 gap-12 relative z-10">
         <div
-          className={`flex-1 w-full h-96 relative rounded-xl overflow-hidden border border-cyan-500/20 shadow-[0_0_30px_rgba(34,211,238,0.08)] ${
+          className={`flex-1 w-full h-[400px] relative border-2 border-cyan-500/50 shadow-[8px_8px_0px_0px_rgba(34,211,238,0.2)] group ${
             reverse ? 'lg:order-2' : ''
           }`}
         >
-          <img src={image} alt={heading} className="w-full h-full object-cover" />
+          <img src={image} alt={heading} className="w-full h-full object-cover filter contrast-110 brightness-90 group-hover:brightness-100 transition-all duration-500" />
           <div
             className={`absolute inset-0 ${
               reverse
-                ? 'bg-gradient-to-l from-black/70 to-transparent'
-                : 'bg-gradient-to-r from-black/70 to-transparent'
+                ? 'bg-gradient-to-l from-black/80 via-black/40 to-transparent'
+                : 'bg-gradient-to-r from-black/80 via-black/40 to-transparent'
             }`}
           />
+          {/* Retro Corner brackets */}
+          <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-cyan-400" />
+          <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-cyan-400" />
+          <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-cyan-400" />
+          <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-cyan-400" />
         </div>
 
         <div className="flex-1 text-left text-gray-100">
-          <motion.h2
-            initial={{ opacity: 0, x: reverse ? 50 : -50 }}
+          <motion.div
+            initial={{ opacity: 0, x: reverse ? 40 : -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl md:text-4xl font-bold mb-6 tracking-wide text-cyan-300"
+            transition={{ duration: 0.6 }}
           >
-            {heading}
-          </motion.h2>
+            <span className="text-cyan-400 text-xs tracking-[0.3em] font-black block mb-3">// ARCADE_LOG //</span>
+            <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-blue-400 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+              {heading}
+            </h2>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            className="text-lg md:text-xl leading-relaxed text-gray-300"
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-base md:text-lg leading-relaxed text-gray-300 font-sans border-l-4 border-cyan-500 pl-6 bg-cyan-950/20 py-4"
           >
             {text}
           </motion.p>
@@ -90,7 +154,7 @@ export default function App() {
       splashImages: [PBS],
       platforms: ['IOS', 'Android', 'Itch.io'],
       release: '2026',
-      status: 'In Development',
+      status: 'IN DEVELOPMENT',
     },
     {
       id: 'fallace',
@@ -99,7 +163,7 @@ export default function App() {
       splashImages: [PFAlien],
       platforms: ['PC'],
       release: '2028',
-      status: 'Pre-production',
+      status: 'PRE-PRODUCTION',
     },
     {
       id: 'phantom',
@@ -108,7 +172,7 @@ export default function App() {
       splashImages: [PFantom],
       platforms: ['PC', 'GOG', 'SWITCH'],
       release: '2027',
-      status: 'Pre-production',
+      status: 'PRE-PRODUCTION',
     },
   ];
 
@@ -143,37 +207,47 @@ export default function App() {
           path="/"
           element={
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <div className="min-h-screen bg-black text-gray-100 antialiased tracking-wide font-mono">
+              <div className="min-h-screen bg-black text-gray-100 antialiased tracking-wider font-mono relative overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+
+                {/* CRT Scanline Overlay Effect */}
+                <div className="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-40" />
 
                 {/* HEADER */}
-                <header className="w-full fixed z-50 top-0 left-0 px-6 py-8 flex items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent backdrop-blur-md border-b border-cyan-500/10">
+                <header className="w-full fixed z-40 top-0 left-0 px-6 lg:px-12 py-5 flex items-center justify-between bg-black/85 backdrop-blur-md border-b-2 border-cyan-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+                  <Link to="/">
+                    <img src={ISText} alt="IronShift Logo" className="w-36 md:w-40 drop-shadow-[2px_2px_0px_rgba(34,211,238,0.5)] transition-transform hover:scale-105" />
+                  </Link>
 
-                  <img src={ISText} alt="Logo" className="w-40 drop-shadow-[0_0_10px_rgba(34,211,238,0.25)]" />
-
-                  <nav className="hidden md:flex gap-10 font-bold text-xs tracking-widest text-gray-300">
-                    <a href="#games" className="hover:text-cyan-300 transition">GAMES</a>
-                    <a href="#updates" className="hover:text-cyan-300 transition">NEWS</a>
-                    <Link to="/the-lab" className="hover:text-cyan-300 transition">THE LAB</Link>
-                    <Link to="/work-with-us" className="hover:text-cyan-300 transition">JOIN US</Link>
-                    <Link to="/about-us" className="hover:text-cyan-300 transition">ABOUT</Link>
+                  <nav className="hidden md:flex items-center gap-8 font-black text-xs tracking-[0.25em] text-gray-300">
+                    <a href="#games" className="hover:text-cyan-300 transition-colors hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">GAMES</a>
+                    <a href="#updates" className="hover:text-cyan-300 transition-colors">NEWS</a>
+                    <Link to="/the-lab" className="hover:text-cyan-300 transition-colors">THE LAB</Link>
+                    <Link to="/work-with-us" className="hover:text-cyan-300 transition-colors">JOIN US</Link>
+                    <Link to="/about-us" className="hover:text-cyan-300 transition-colors">ABOUT</Link>
                   </nav>
 
                   <div className="md:hidden">
-                    <button onClick={() => setMenuOpen(!menuOpen)} className="text-cyan-300 text-xl">
-                      ☰
+                    <button onClick={() => setMenuOpen(!menuOpen)} className="text-cyan-300 text-2xl p-2 focus:outline-none">
+                      {menuOpen ? '✕' : '☰'}
                     </button>
                   </div>
 
                   {menuOpen && (
-                    <div className="absolute top-full right-6 mt-2 w-52 bg-black border border-cyan-500/20 rounded-lg shadow-lg flex flex-col p-2 gap-2 backdrop-blur-md">
-                      <a href="#games" className="hover:text-cyan-300 px-3 py-2 text-gray-300">Games</a>
-                      <a href="#updates" className="hover:text-cyan-300 px-3 py-2 text-gray-300">News</a>
-                      <Link to="/about-us" className="hover:text-cyan-300 px-3 py-2 text-gray-300">About</Link>
-                    </div>
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute top-full left-0 w-full bg-black border-b-2 border-cyan-500/50 shadow-2xl flex flex-col p-4 gap-3 md:hidden z-50"
+                    >
+                      <a href="#games" onClick={() => setMenuOpen(false)} className="hover:text-cyan-300 px-4 py-2 text-gray-300 border-b border-gray-900">GAMES</a>
+                      <a href="#updates" onClick={() => setMenuOpen(false)} className="hover:text-cyan-300 px-4 py-2 text-gray-300 border-b border-gray-900">NEWS</a>
+                      <Link to="/the-lab" onClick={() => setMenuOpen(false)} className="hover:text-cyan-300 px-4 py-2 text-gray-300 border-b border-gray-900">THE LAB</Link>
+                      <Link to="/work-with-us" onClick={() => setMenuOpen(false)} className="hover:text-cyan-300 px-4 py-2 text-gray-300 border-b border-gray-900">JOIN US</Link>
+                      <Link to="/about-us" onClick={() => setMenuOpen(false)} className="hover:text-cyan-300 px-4 py-2 text-gray-300">ABOUT</Link>
+                    </motion.div>
                   )}
                 </header>
 
-                {/* HERO */}
+                {/* HERO CAROUSEL */}
                 <section className="relative w-full h-screen overflow-hidden">
                   {mainCarousel.map((slide, index) => (
                     <motion.div
@@ -183,29 +257,63 @@ export default function App() {
                       transition={{ duration: 1 }}
                       className="absolute inset-0"
                     >
-                      <img src={slide.splashImages[0]} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black" />
+                      <img src={slide.splashImages[0]} alt={slide.title} className="w-full h-full object-cover filter brightness-75 contrast-110 scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60" />
+                      
+                      {/* Retro Grid Accent Overlay */}
+                      <div className="absolute inset-0 bg-[radial-gradient(#22d3ee_1px,transparent_1px)] bg-[size:32px_32px] opacity-15 pointer-events-none" />
 
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                        <h1 className="text-5xl md:text-6xl font-bold tracking-[0.3em] mb-6 text-cyan-300">
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto z-10">
+                        <motion.div 
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className="flex items-center gap-3 px-5 py-2 bg-cyan-950 border-2 border-cyan-400 text-cyan-300 text-xs font-black tracking-widest mb-6 shadow-[4px_4px_0px_0px_rgba(34,211,238,0.5)]"
+                        >
+                          <span className="w-2.5 h-2.5 bg-cyan-400 animate-pulse" />
+                          <span>{slide.status}</span>
+                          <span>//</span>
+                          <span>EST. {slide.release}</span>
+                        </motion.div>
+
+                        <motion.h1 
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.4 }}
+                          className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.2em] mb-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-white to-cyan-400 drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                        >
                           {slide.title}
-                        </h1>
+                        </motion.h1>
 
-                        <p className="text-gray-300 mb-8">
-                          {slide.status} • {slide.release}
-                        </p>
-
-                        <div className="flex gap-6">
-                          <button className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-md text-sm shadow-[0_0_15px_rgba(34,211,238,0.25)]">
-                            Wishlist
+                        <motion.div 
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.6 }}
+                          className="flex flex-wrap justify-center gap-6"
+                        >
+                          <button className="px-8 py-4 bg-cyan-400 text-black font-black text-xs tracking-[0.25em] border-2 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,0.4)] hover:bg-cyan-300 hover:shadow-[6px_6px_0px_0px_rgba(34,211,238,0.8)] transition-all transform hover:-translate-y-1">
+                            WISHLIST NOW
                           </button>
-                          <button className="px-6 py-3 border border-cyan-400/40 rounded-md text-sm hover:bg-cyan-400/10">
-                            Trailer
+                          <button className="px-8 py-4 bg-black text-cyan-300 font-black text-xs tracking-[0.25em] border-2 border-cyan-400 shadow-[6px_6px_0px_0px_rgba(34,211,238,0.4)] hover:bg-cyan-950 transition-all">
+                            WATCH TRAILER
                           </button>
-                        </div>
+                        </motion.div>
                       </div>
                     </motion.div>
                   ))}
+
+                  {/* Carousel HUD Indicators */}
+                  <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-3 z-30">
+                    {mainCarousel.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentSlide(idx)}
+                        className={`h-3 transition-all border border-cyan-400 ${
+                          idx === currentSlide ? 'w-10 bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.9)]' : 'w-3 bg-black'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </section>
 
                 {/* STATIC SECTION */}
@@ -216,27 +324,38 @@ export default function App() {
                 />
 
                 {/* GAMES GRID */}
-                <section id="games" className="max-w-7xl mx-auto px-6 py-24">
-                  <h2 className="text-4xl font-bold text-center mb-16 tracking-widest text-cyan-300">
-                    OUR GAMES
-                  </h2>
+                <section id="games" className="max-w-7xl mx-auto px-6 py-32 relative">
+                  <div className="text-center mb-20">
+                    <span className="text-cyan-400 text-xs tracking-[0.3em] font-black block mb-3">// PORTFOLIO_CATALOG //</span>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                      OUR GAMES
+                    </h2>
+                  </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {games.map((g) => (
                       <motion.article
                         key={g.id}
-                        whileHover={{ scale: 1.04 }}
-                        className="bg-gray-900 rounded-2xl overflow-hidden border border-cyan-500/10 shadow-[0_0_25px_rgba(34,211,238,0.08)]"
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        className="bg-gray-950 border-2 border-cyan-500/40 shadow-[6px_6px_0px_0px_rgba(34,211,238,0.2)] hover:border-cyan-300 hover:shadow-[8px_8px_0px_0px_rgba(34,211,238,0.6)] transition-all flex flex-col relative group"
                       >
-                        <img src={g.cover} className="w-full h-56 object-cover" />
-                        <div className="p-6 text-center">
-                          <h4 className="text-lg font-semibold text-cyan-200">{g.title}</h4>
-                          <p className="text-sm text-gray-400 mt-2">{g.status}</p>
+                        <div className="relative h-64 overflow-hidden border-b-2 border-cyan-500/40">
+                          <img src={g.cover} alt={g.title} className="w-full h-full object-cover filter contrast-110 group-hover:scale-105 transition-transform duration-500" />
+                          <span className="absolute top-4 right-4 px-3 py-1 bg-black border border-cyan-400 text-xs text-cyan-300 font-black shadow-[2px_2px_0px_rgba(34,211,238,0.5)]">
+                            {g.release}
+                          </span>
+                        </div>
+                        <div className="p-6 flex flex-col flex-grow justify-between text-center">
+                          <div>
+                            <h4 className="text-lg font-black text-cyan-200 tracking-wide mb-2">{g.title}</h4>
+                            <p className="text-xs text-cyan-400 mb-6 tracking-widest">{g.status}</p>
+                          </div>
                           <button
                             onClick={() => setActiveGame(g)}
-                            className="mt-4 px-4 py-2 bg-cyan-600 rounded-md text-sm hover:bg-cyan-500"
+                            className="w-full py-3.5 bg-cyan-950 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-black font-black text-xs tracking-[0.2em] transition-all shadow-[4px_4px_0px_0px_rgba(34,211,238,0.4)]"
                           >
-                            Details
+                            VIEW DETAILS
                           </button>
                         </div>
                       </motion.article>
@@ -244,45 +363,60 @@ export default function App() {
                   </div>
 
                   {/* Browser Games */}
-                  <h3 className="text-3xl font-bold text-center mt-24 mb-12 tracking-wider text-cyan-300">
-                    BROWSER GAMES
-                  </h3>
+                  <div className="text-center mt-36 mb-16">
+                    <span className="text-cyan-400 text-xs tracking-[0.3em] font-black block mb-3">// QUICK_LAUNCH //</span>
+                    <h3 className="text-3xl md:text-4xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
+                      BROWSER GAMES
+                    </h3>
+                  </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div className="bg-gray-900 rounded-2xl overflow-hidden border border-cyan-500/10">
-                      <img src={BTreas} className="w-full h-56 object-cover" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <motion.div 
+                      whileHover={{ y: -6 }}
+                      className="bg-gray-950 border-2 border-cyan-500/40 shadow-[6px_6px_0px_0px_rgba(34,211,238,0.2)] hover:border-cyan-300 transition-all"
+                    >
+                      <div className="relative h-64 overflow-hidden border-b-2 border-cyan-500/40">
+                        <img src={BTreas} alt="Browser Fun" className="w-full h-full object-cover filter contrast-110" />
+                      </div>
                       <div className="p-6 text-center">
-                        <h4 className="text-lg font-semibold">Browser Fun</h4>
-                        <button className="mt-4 px-4 py-2 bg-cyan-600 rounded-md text-sm">
-                          Play Now
+                        <h4 className="text-xl font-bold mb-4 text-cyan-200">Browser Fun</h4>
+                        <button className="w-full py-3.5 bg-cyan-400 text-black border-2 border-white font-black text-xs tracking-[0.2em] shadow-[4px_4px_0px_0px_rgba(255,255,255,0.4)] hover:bg-cyan-300 transition-all">
+                          PLAY NOW
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </section>
 
                 {/* NEWS */}
-                <section id="updates" className="py-24 bg-gradient-to-b from-black via-gray-950 to-black">
-                  <div className="max-w-5xl mx-auto px-6">
-                    <h2 className="text-4xl font-bold text-center mb-16 tracking-widest text-cyan-300">
-                      LATEST NEWS
-                    </h2>
+                <section id="updates" className="py-32 bg-gradient-to-b from-black via-gray-950 to-black border-y-2 border-cyan-500/20 relative">
+                  <div className="max-w-4xl mx-auto px-6 relative z-10">
+                    <div className="text-center mb-16">
+                      <span className="text-cyan-400 text-xs tracking-[0.3em] font-black block mb-3">// STUDIO_COMMUNIQUÉ //</span>
+                      <h2 className="text-4xl md:text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
+                        LATEST NEWS
+                      </h2>
+                    </div>
 
                     <div className="space-y-6">
                       {updates.map((u) => (
-                        <div key={u.id} className="bg-gray-900 p-6 rounded-xl border border-cyan-500/10">
-                          <div className="flex justify-between text-sm text-gray-400 mb-2">
-                            <span>{u.title}</span>
-                            <span>{u.date}</span>
+                        <motion.div 
+                          key={u.id} 
+                          whileHover={{ scale: 1.01 }}
+                          className="bg-gray-950 p-8 border-2 border-cyan-500/30 shadow-[6px_6px_0px_0px_rgba(34,211,238,0.2)] hover:border-cyan-400 transition-all"
+                        >
+                          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-cyan-400 mb-4 gap-2">
+                            <span className="font-black text-base text-cyan-200">{u.title}</span>
+                            <span className="px-3 py-1 bg-black border border-cyan-500 text-xs">{u.date}</span>
                           </div>
-                          <p className="text-gray-300">{u.excerpt}</p>
-                        </div>
+                          <p className="text-gray-300 font-sans leading-relaxed">{u.excerpt}</p>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
                 </section>
 
-                {/* EVERYTHING BELOW KEPT EXACTLY */}
+                {/* CORE LORE / SECTIONS */}
                 <ImageTextSection image={TeamImage} heading="Our Team" text="We began with a single developer in 2023 — learning, experimenting, and building prototypes in quiet determination, without funding or industry connections. Despite never having worked in a studio before, a deep passion for games and an unshakable drive to create pushed him forward." />
 
                 <ImageTextSection image={ValuesImage} heading="Our Values" text="Unyielding passion, creativity, collaboration, and innovation drive everything we do. We believe in making games with heart, imagination, and meaningful experiences for our players." reverse />
@@ -295,54 +429,60 @@ export default function App() {
                   paragraph="Powered by community. Driven by passion."
                 >
                   <div className="mt-12">
-                    <SupportersCarousel speed={50} />
+                    <SupportersCarousel />
                   </div>
                 </StaticImageSection>
 
-                {/* FOOTER (UNCHANGED CONTENT, ONLY STYLED) */}
-                <footer className="bg-black border-t border-cyan-500/10 pt-20 pb-10 px-6">
-                  <div className="max-w-7xl mx-auto">
+                {/* FOOTER */}
+                <footer className="bg-black border-t-2 border-cyan-500/30 pt-20 pb-12 px-6 lg:px-12 relative overflow-hidden">
+                  <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
 
                       <div className="lg:col-span-2">
-                        <img src={ISText} className="w-40 mb-6" />
-                        <p className="text-gray-400 text-sm max-w-md">
-                          Ironpulse Studios is an independent game development studio crafting immersive worlds, powerful narratives, and unforgettable gameplay experiences.
+                        <img src={ISText} alt="IronShift Studios" className="w-40 mb-6 drop-shadow-[2px_2px_0px_rgba(34,211,238,0.5)]" />
+                        <p className="text-gray-400 text-sm max-w-md font-sans leading-relaxed">
+                          IronShift Studios is an independent game development studio crafting immersive worlds, powerful narratives, and unforgettable gameplay experiences.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-bold tracking-widest mb-6 text-cyan-300">STUDIO</h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                          <li><Link to="/about-us">About Us</Link></li>
-                          <li><Link to="/work-with-us">Careers</Link></li>
-                          <li><Link to="/the-lab">The Lab</Link></li>
+                        <h4 className="text-sm font-black tracking-widest mb-6 text-cyan-300">// STUDIO</h4>
+                        <ul className="space-y-3 text-sm text-gray-400 font-sans">
+                          <li><Link to="/about-us" className="hover:text-cyan-300 transition-colors">About Us</Link></li>
+                          <li><Link to="/work-with-us" className="hover:text-cyan-300 transition-colors">Careers</Link></li>
+                          <li><Link to="/the-lab" className="hover:text-cyan-300 transition-colors">The Lab</Link></li>
                         </ul>
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-bold tracking-widest mb-6 text-cyan-300">GAMES</h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                          <li>Project Breaker</li>
-                          <li>Project Phantom</li>
-                          <li>Project Fallace</li>
+                        <h4 className="text-sm font-black tracking-widest mb-6 text-cyan-300">// GAMES</h4>
+                        <ul className="space-y-3 text-sm text-gray-400 font-sans">
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Project Breaker</li>
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Project Phantom</li>
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Project Fallace</li>
                         </ul>
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-bold tracking-widest mb-6 text-cyan-300">CONTACT</h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                          <li>Email: contact@ironpulse-studios.com</li>
-                          <li>Press Kit</li>
-                          <li>Support</li>
+                        <h4 className="text-sm font-black tracking-widest mb-6 text-cyan-300">// CONTACT</h4>
+                        <ul className="space-y-3 text-sm text-gray-400 font-sans">
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Email: ironshiftgames@hotmail.com</li>
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Press Kit</li>
+                          <li className="hover:text-cyan-300 transition-colors cursor-pointer">Support</li>
                         </ul>
                       </div>
 
                     </div>
 
-                    <div className="border-t border-cyan-500/10 mt-16 pt-8 text-xs text-gray-500 flex justify-between">
-                      <span>© {new Date().getFullYear()} Ironpulse Studios</span>
-                      <span>Privacy • Terms • Cookies</span>
+                    <div className="border-t border-cyan-500/20 mt-16 pt-8 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-4 font-sans">
+                      <span>© {new Date().getFullYear()} IronShift Studios. All rights reserved.</span>
+                      <span className="space-x-4">
+                        <a href="#privacy" className="hover:text-cyan-300 transition-colors">Privacy</a>
+                        <span>•</span>
+                        <a href="#terms" className="hover:text-cyan-300 transition-colors">Terms</a>
+                        <span>•</span>
+                        <a href="#cookies" className="hover:text-cyan-300 transition-colors">Cookies</a>
+                      </span>
                     </div>
                   </div>
                 </footer>

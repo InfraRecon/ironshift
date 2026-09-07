@@ -13,10 +13,10 @@ export default function Footer() {
 
           {/* Column 1 — Studio */}
           <div className="lg:col-span-2">
-            <img src={ISText} alt="Ironpulse Studios" className="w-40 mb-6" />
+            <img src={ISText} alt="IronShift Studios" className="w-40 mb-6" />
 
             <p className="text-gray-400 text-sm leading-relaxed max-w-md">
-              Ironpulse Studios is an independent game development studio crafting 
+              IronShift Studios is an independent game development studio crafting 
               immersive worlds, powerful narratives, and unforgettable gameplay experiences.
             </p>
 
@@ -61,7 +61,7 @@ export default function Footer() {
               CONTACT
             </h4>
             <ul className="space-y-3 text-sm text-gray-400">
-              <li>Email: contact@ironpulse-studios.com</li>
+              <li>Email: ironshiftgames@hotmail.com</li>
               <li>Business Inquiries</li>
               <li>Press Kit</li>
               <li>Support</li>
@@ -73,7 +73,7 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
           <div>
-            © {new Date().getFullYear()} Ironpulse Studios. All rights reserved.
+            © {new Date().getFullYear()} IronShift Studios. All rights reserved.
           </div>
 
           <div className="flex gap-6">

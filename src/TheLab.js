@@ -1,37 +1,87 @@
-// ./src/TheLab.js
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import LabModel from './components/LabModel';
-import UnityGame from './components/UnityGame';
-import Footer from './components/Footer';
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import LabModel from "./components/LabModel";
+import UnityGame from "./components/UnityGame";
+import AiComparison from "./components/AiComparison"; // Import the new component
+import Footer from "./components/Footer";
+
+import Kotaorg from './assets/Kotaorg.png';
+import KotaAI from './assets/KotaAI.png';
+import StarandVadorg from './assets/VadandStarorg.png';
+import StarandVadorgAI from './assets/VadandStarAI.png';
+import ShaktiAorg from './assets/ShaktiAorg.png';
+import ShaktiAAI from './assets/ShaktiAAI.png';
+import StarandOrgorg from './assets/StarandOrgorg.png';
+import StarandOrgAI from './assets/StarandOrgAI.png';
 
 export default function TheLab() {
   const videos = [
     {
-      title: 'Grand Theft Auto Loading Screen',
+      title: "Grand Theft Auto Loading Screen",
       description:
-        'Experimenting with loading screen techniques, post processing and visuals for scene loading.',
-      url: 'https://www.youtube.com/embed/KS6C793gyqc?si=P9gQ520ib-Y-pi8g',
-      creator: 'Developed by Roberto Bliaja',
+        "Experimenting with loading screen techniques, post-processing, and scene-loading visuals.",
+      url: "https://www.youtube.com/embed/KS6C793gyqc?si=P9gQ520ib-Y-pi8g",
+      creator: "Developed by Roberto Bliaja",
+      tags: ["Rendering", "Loading", "FX"],
     },
     {
-      title: 'VR Lightsabers',
+      title: "VR Lightsabers",
       description:
-        'Exploring the interactivity and graphical performance of lightsabers in Unity VR',
-      url: 'https://www.youtube.com/embed/q4DDa6V4hxM?si=Qhquo5pVpLoqqH-7',
-      creator: 'Developed by Roberto Bliaja',
+        "Exploring the interactivity and graphical performance of lightsabers in Unity VR.",
+      url: "https://www.youtube.com/embed/q4DDa6V4hxM?si=Qhquo5pVpLoqqH-7",
+      creator: "Developed by Roberto Bliaja",
+      tags: ["VR", "Unity", "Physics"],
     },
     {
-      title: 'Real-time Vertex Path Finding',
-      description: 'CPU-driven pathfinding for horde-like enemies',
-      url: 'https://www.youtube.com/embed/kCVG6zdq8iM?si=YDMyaX-Qt-DQREwo',
-      creator: 'Developed by Roberto Bliaja',
+      title: "Real-time Vertex Path Finding",
+      description: "CPU-driven pathfinding for horde-like enemies.",
+      url: "https://www.youtube.com/embed/kCVG6zdq8iM?si=YDMyaX-Qt-DQREwo",
+      creator: "Developed by Roberto Bliaja",
+      tags: ["AI", "Pathfinding", "CPU"],
     },
     {
-      title: 'Force Unleashed Star Destroyer Concept Scene',
-      description: 'Experimenting with higher quality production values',
-      url: 'https://www.youtube.com/embed/Wcyl-fs1NZY?si=bIIfoMyIxw-a_lr1',
-      creator: 'Developed by Roberto Bliaja',
+      title: "Force Unleashed Star Destroyer Concept Scene",
+      description: "Experimenting with higher-quality production values.",
+      url: "https://www.youtube.com/embed/Wcyl-fs1NZY?si=bIIfoMyIxw-a_lr1",
+      creator: "Developed by Roberto Bliaja",
+      tags: ["Cinematics", "Rendering", "Lighting"],
+    },
+    {
+      title: "Racing Game & Customization Concept Scene",
+      description:
+        "Experimenting with racing physics and vehicle customization.",
+      url: "https://www.youtube.com/embed/93XMum0-m_0?si=eHCNFnHqTbrzKSEE",
+      creator: "Developed by Roberto Bliaja",
+      tags: ["Vehicles", "Physics", "Customization"],
+    },
+  ];
+
+  // 4 AI Experimentation Images dataset
+  const aiComparisons = [
+    {
+      title: "GENERAL KOTA",
+      description: "Neural net upscaling test on low-poly environments and retro textures.",
+      oldImage: Kotaorg, // Replace with your old game image url
+      aiImage: KotaAI,   // Replace with your AI remaster image url
+    },
+    {
+      title: "VADER AND STARKILLER",
+      description: "AI-assisted normal map generation and facial detail reconstruction.",
+      oldImage: StarandVadorg, // Replace with your old game image url
+      aiImage: StarandVadorgAI,   // Replace with your AI remaster image url
+    },
+    {
+      title: "SHAK TI's APPRENTICE",
+      description: "Real-time AI style transfer for dynamic atmosphere adjustments.",
+      oldImage: ShaktiAorg, // Replace with your old game image url
+      aiImage: ShaktiAAI,   // Replace with your AI remaster image url
+    },
+    {
+      title: "STARKILLER AND ORGANA",
+      description: "Generative detail restoration for classic retro asset pipelines.",
+      oldImage: StarandOrgorg, // Replace with your old game image url
+      aiImage: StarandOrgAI,   // Replace with your AI remaster image url
     },
   ];
 
@@ -44,127 +94,146 @@ export default function TheLab() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 font-sans antialiased relative overflow-hidden">
+    <div className="relative min-h-screen bg-black font-mono text-gray-100 selection:bg-cyan-400 selection:text-black">
+      {/* Retro CRT Overlays */}
+      <div className="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-40" />
+      <div className="fixed inset-0 bg-[radial-gradient(#22d3ee_1px,transparent_1px)] bg-[size:32px_32px] opacity-10 pointer-events-none" />
 
-      {/* subtle retro grid background */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px]" />
-
-      {/* HEADER */}
-      <header className="w-full fixed z-50 top-0 left-0 px-6 py-5 flex items-center justify-between bg-gradient-to-b from-black/90 via-black/60 to-transparent backdrop-blur-md border-b border-white/5">
-        <h1 className="text-lg md:text-xl font-bold tracking-[0.25em] text-white">
-          THE LAB
-        </h1>
-
+      {/* Header */}
+      <header className="fixed top-0 z-50 flex w-full items-center justify-between border-b-2 border-cyan-500/30 bg-black/85 px-8 py-5 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+        <h1 className="text-sm font-black tracking-[0.35em] text-cyan-400">// THE_LAB</h1>
         <Link
           to="/"
-          className="px-4 py-2 text-sm font-semibold text-indigo-300 hover:text-white transition border border-white/10 rounded-md hover:border-indigo-400/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)]"
+          className="border-2 border-cyan-500/40 px-4 py-2 text-xs font-black tracking-[0.2em] hover:bg-cyan-400 hover:text-black transition-all"
         >
-          Back Home
+          BACK_HOME
         </Link>
       </header>
 
-      <main className="pt-28 max-w-7xl mx-auto px-6 relative z-10">
+      <main className="relative z-10 mx-auto max-w-7xl px-6 pt-32">
+        {/* HERO */}
+        <section className="flex min-h-[70vh] flex-col items-center justify-center text-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8 px-4 py-1 border-2 border-cyan-400 text-cyan-400 text-[10px] tracking-[0.4em] font-black">
+            RESEARCH_DIVISION_ACTIVE
+          </motion.div>
 
-        {/* INTRO */}
-        <section className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            The Lab
+          <h2 className="mb-8 text-5xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-white to-cyan-400 drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+            THE LAB
           </h2>
 
-          <div className="space-y-4 text-gray-300 text-lg leading-relaxed max-w-3xl">
-            <p>
-              The Lab is Iron Shift’s creative sandbox — a space to explore, experiment, and test the limits
-              of what we can build. These projects aren’t tied to any specific game — they’re experiments in
-              motion, lighting, and design that push our craft forward.
-            </p>
-            <p>
-              The Lab is where Iron Shift hones its edge — where innovation is forged through experimentation.
-            </p>
-            <p className="text-gray-400">
-              We believe that every great idea starts with a spark — and this is where those sparks are born.
-            </p>
-          </div>
+          <p className="max-w-2xl text-lg text-gray-300 border-l-4 border-cyan-500 pl-6 text-left">
+            Experimental gameplay systems, rendering techniques, physics simulations, VR interactions, AI systems, and real-time prototyping.
+          </p>
         </section>
 
-        {/* UNITY */}
-        <section className="mb-20">
-          <h3 className="text-2xl md:text-3xl font-semibold mb-3 tracking-wide">
-            Interactive Unity Prototype
-          </h3>
-          <p className="text-gray-400 mb-8 max-w-2xl">
-            A real-time interactive 3D experiment rendered directly in the browser using WebGL.
-          </p>
+        {/* EXPERIMENT 01 */}
+        <section className="mb-32">
+          <div className="mb-10 flex items-center gap-6">
+            <div className="flex h-16 w-16 items-center justify-center border-2 border-cyan-400 bg-cyan-950 font-black text-cyan-400 shadow-[4px_4px_0px_rgba(34,211,238,0.3)]">
+              01
+            </div>
+            <div>
+              <p className="text-[10px] tracking-[0.4em] text-cyan-400 font-black">// EXPERIMENT</p>
+              <h3 className="text-3xl font-black tracking-wide">INTERACTIVE_UNITY_PROTOTYPE</h3>
+            </div>
+          </div>
 
-          <div className="relative max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(99,102,241,0.08)]">
+          <div className="relative group p-1 bg-gradient-to-br from-cyan-500 to-black rounded-sm">
             <div className="aspect-video bg-black">
               <UnityGame ref={unityRef} />
             </div>
           </div>
 
-          <div className="flex justify-center mt-6">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={reloadUnity}
-              className="px-5 py-2 bg-indigo-600/80 hover:bg-indigo-500 text-white rounded-md transition shadow-[0_0_20px_rgba(99,102,241,0.3)]"
+              className="border-2 border-cyan-400 px-8 py-3 font-black text-xs tracking-[0.2em] text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all shadow-[4px_4px_0px_rgba(34,211,238,0.3)]"
             >
-              Reload Unity
+              RELOAD_PROTOTYPE
             </button>
           </div>
         </section>
 
-        {/* LAB MODEL */}
-        <section className="mb-20">
-          <h3 className="text-2xl md:text-3xl font-semibold mb-3 tracking-wide">
-            3D Object Prototype
-          </h3>
-          <p className="text-gray-400 mb-8 max-w-2xl">
-            Interactive 3D model experiment showing motion and materials in real-time.
-          </p>
+        {/* Divider */}
+        <div className="my-24 flex items-center">
+          <div className="h-px flex-1 bg-cyan-500/30" />
+          <span className="px-6 text-[10px] uppercase tracking-[0.5em] text-cyan-400 font-black">RESEARCH_DIVISION</span>
+          <div className="h-px flex-1 bg-cyan-500/30" />
+        </div>
 
-          <div className="relative max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.05)] bg-black">
+        {/* EXPERIMENT 02 */}
+        <section className="mb-32">
+          <div className="mb-10 flex items-center gap-6">
+            <div className="flex h-16 w-16 items-center justify-center border-2 border-cyan-400 bg-cyan-950 font-black text-cyan-400 shadow-[4px_4px_0px_rgba(34,211,238,0.3)]">
+              02
+            </div>
+            <div>
+              <p className="text-[10px] tracking-[0.4em] text-cyan-400 font-black">// EXPERIMENT</p>
+              <h3 className="text-3xl font-black tracking-wide">3D_OBJECT_PROTOTYPE</h3>
+            </div>
+          </div>
+
+          <div className="border-2 border-cyan-500/40 bg-black p-1">
             <LabModel />
           </div>
         </section>
 
-        {/* VIDEO GALLERY */}
-        <section className="mb-24">
-          <h3 className="text-3xl font-bold mb-10 tracking-wide text-center">
-            EXPERIMENT ARCHIVE
-          </h3>
+        {/* Divider */}
+        <div className="my-24 flex items-center">
+          <div className="h-px flex-1 bg-cyan-500/30" />
+          <span className="px-6 text-[10px] uppercase tracking-[0.5em] text-cyan-400 font-black">AI_DIVISION</span>
+          <div className="h-px flex-1 bg-cyan-500/30" />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {videos.map((video, i) => (
-              <div
-                key={i}
-                className="group bg-[#111118] rounded-2xl overflow-hidden border border-white/10 shadow-lg hover:shadow-[0_0_40px_rgba(99,102,241,0.15)] transition-all duration-300"
-              >
-                <div className="aspect-video">
-                  <iframe
-                    src={video.url}
-                    title={video.title}
-                    allowFullScreen
-                    className="w-full h-full"
-                  />
-                </div>
+        {/* EXPERIMENT 03: AI REMASTER COMPARISON SECTION */}
+        <section className="mb-32">
+          <div className="mb-10 flex items-center gap-6">
+            <div className="flex h-16 w-16 items-center justify-center border-2 border-cyan-400 bg-cyan-950 font-black text-cyan-400 shadow-[4px_4px_0px_rgba(34,211,238,0.3)]">
+              03
+            </div>
+            <div>
+              <p className="text-[10px] tracking-[0.4em] text-cyan-400 font-black">// EXPERIMENT</p>
+              <h3 className="text-3xl font-black tracking-wide">AI_TEXTURE_REMASTERS</h3>
+            </div>
+          </div>
 
-                <div className="p-5">
-                  <h4 className="text-lg font-semibold group-hover:text-indigo-300 transition">
-                    {video.title}
-                  </h4>
-                  <p className="text-gray-400 text-sm mt-2 leading-relaxed">
-                    {video.description}
-                  </p>
-                  <p className="text-gray-500 text-xs italic mt-3">
-                    {video.creator}
-                  </p>
+          <AiComparison comparisons={aiComparisons} />
+        </section>
+
+        {/* ARCHIVE */}
+        <section className="mb-32">
+          <h3 className="mb-16 text-center text-4xl font-black tracking-[0.2em] text-cyan-400">// EXPERIMENT_ARCHIVE</h3>
+
+          {/* Featured */}
+          <div className="mb-12 border-2 border-cyan-500/40 bg-gray-950 p-4 shadow-[8px_8px_0px_rgba(34,211,238,0.2)]">
+            <div className="aspect-video mb-6">
+              <iframe src={videos[0].url} title={videos[0].title} allowFullScreen className="h-full w-full border border-cyan-500/20" />
+            </div>
+            <p className="text-[10px] tracking-[0.4em] text-cyan-400 font-black mb-2">// FEATURED</p>
+            <h4 className="text-2xl font-black mb-4">{videos[0].title}</h4>
+            <p className="text-gray-400 font-sans">{videos[0].description}</p>
+          </div>
+
+          {/* Grid */}
+          <div className="grid gap-8 md:grid-cols-2">
+            {videos.slice(1).map((video, index) => (
+              <div key={index} className="border-2 border-cyan-500/20 bg-gray-950 p-4 transition-all hover:border-cyan-400 group">
+                <div className="aspect-video mb-4">
+                  <iframe src={video.url} title={video.title} allowFullScreen className="h-full w-full" />
                 </div>
+                <h4 className="font-black mb-4 group-hover:text-cyan-400 transition-colors">{video.title}</h4>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {video.tags.map(tag => (
+                    <span key={tag} className="border border-cyan-500/40 px-2 py-0.5 text-[10px] font-black text-cyan-300">{tag}</span>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500 italic">{video.creator}</p>
               </div>
             ))}
           </div>
         </section>
-
       </main>
 
-      {/* FOOTER (UNCHANGED, PRESERVED) */}
       <Footer />
     </div>
   );
