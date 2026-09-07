@@ -1,12 +1,20 @@
 {
   "files": {
-    "main.css": "/ironshift/static/css/main.ee8c733a.css",
-    "main.js": "/ironshift/static/js/main.ab0d86fa.js",
+    "main.css": "/ironshift/static/css/main.68fd47cf.css",
+    "main.js": "/ironshift/static/js/main.1ceb9201.js",
     "static/media/ProjectBreakerScreen1.png": "/ironshift/static/media/ProjectBreakerScreen1.9653581ef624e4ccff72.png",
+    "static/media/StarandOrgorg.png": "/ironshift/static/media/StarandOrgorg.2299500df4b888140b7e.png",
+    "static/media/KotaAI.png": "/ironshift/static/media/KotaAI.414cadc3b355675fa096.png",
+    "static/media/ShaktiAAI.png": "/ironshift/static/media/ShaktiAAI.c0f4e8ac8ac4bb1a144c.png",
+    "static/media/StarandOrgAI.png": "/ironshift/static/media/StarandOrgAI.890988d0d0ba757f23c5.png",
+    "static/media/ShaktiAorg.png": "/ironshift/static/media/ShaktiAorg.01a35ff13a5102182264.png",
     "static/media/ProjectPhantom.png": "/ironshift/static/media/ProjectPhantom.70e1fcc5fbbca132f904.png",
     "static/media/BrowserTreasure.png": "/ironshift/static/media/BrowserTreasure.3c4d68eca5ab288bd900.png",
+    "static/media/VadandStarorg.png": "/ironshift/static/media/VadandStarorg.673bac463287982ec123.png",
+    "static/media/VadandStarAI.png": "/ironshift/static/media/VadandStarAI.384cf9b38a50c7ea7eb3.png",
     "static/media/ProjectFallaceAlien.png": "/ironshift/static/media/ProjectFallaceAlien.9636590f25fedf90a382.png",
     "static/media/AstroAssault.png": "/ironshift/static/media/AstroAssault.d64986e82e397404518f.png",
+    "static/media/Kotaorg.png": "/ironshift/static/media/Kotaorg.0d3d6ee5bab2d8a63cf5.png",
     "static/media/ASTROBREAK.png": "/ironshift/static/media/ASTROBREAK.a05eda9680d4923e13cb.png",
     "static/media/ASTROSHOP.png": "/ironshift/static/media/ASTROSHOP.08f05897fd6672748e60.png",
     "static/media/ASTROPLANET.png": "/ironshift/static/media/ASTROPLANET.277d445d7212aa3559cc.png",
@@ -21,11 +29,11 @@
     "static/media/OurTeam.jpg": "/ironshift/static/media/OurTeam.702e2328fc1425af9323.jpg",
     "static/media/GameDevelopment.jpg": "/ironshift/static/media/GameDevelopment.72381c9bf5b43f6bc217.jpg",
     "index.html": "/ironshift/index.html",
-    "main.ee8c733a.css.map": "/ironshift/static/css/main.ee8c733a.css.map",
-    "main.ab0d86fa.js.map": "/ironshift/static/js/main.ab0d86fa.js.map"
+    "main.68fd47cf.css.map": "/ironshift/static/css/main.68fd47cf.css.map",
+    "main.1ceb9201.js.map": "/ironshift/static/js/main.1ceb9201.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee8c733a.css",
-    "static/js/main.ab0d86fa.js"
+    "static/css/main.68fd47cf.css",
+    "static/js/main.1ceb9201.js"
   ]
 }
