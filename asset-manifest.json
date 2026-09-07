@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ironshift/static/css/main.68fd47cf.css",
-    "main.js": "/ironshift/static/js/main.ce6296dd.js",
+    "main.js": "/ironshift/static/js/main.1224f8b6.js",
     "static/media/ProjectBreakerScreen1.png": "/ironshift/static/media/ProjectBreakerScreen1.9653581ef624e4ccff72.png",
     "static/media/StarandOrgorg.png": "/ironshift/static/media/StarandOrgorg.2299500df4b888140b7e.png",
     "static/media/KotaAI.png": "/ironshift/static/media/KotaAI.414cadc3b355675fa096.png",
@@ -30,10 +30,10 @@
     "static/media/GameDevelopment.jpg": "/ironshift/static/media/GameDevelopment.72381c9bf5b43f6bc217.jpg",
     "index.html": "/ironshift/index.html",
     "main.68fd47cf.css.map": "/ironshift/static/css/main.68fd47cf.css.map",
-    "main.ce6296dd.js.map": "/ironshift/static/js/main.ce6296dd.js.map"
+    "main.1224f8b6.js.map": "/ironshift/static/js/main.1224f8b6.js.map"
   },
   "entrypoints": [
     "static/css/main.68fd47cf.css",
-    "static/js/main.ce6296dd.js"
+    "static/js/main.1224f8b6.js"
   ]
 }
